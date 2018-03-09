@@ -365,15 +365,11 @@ class ETradeAccounts(object):
                 The default is 25. Used for paging.
            description: see ETrade API docs'''
 
-        # add each optional argument not equal to 'ALL' to the uri
+        # build a string of optional path arguments with pre-pended slashes if they are
+        # not equal to 'ALL'
         optional_args = [group, asset_type, transaction_type, ticker_symbol]
-        optional_uri = ''
-        for optional_arg in optional_args:
-            if optional_arg.upper() != 'ALL':
-                optional_uri = '%s/%s' % (
-                    optional_uri,
-                    optional_arg
-                )
+        optional_uri = ''.join(['/' + x for x in optional_args if x.upper() != 'ALL'])
+
         # Set Env
         if dev:
             #assemble the following:
